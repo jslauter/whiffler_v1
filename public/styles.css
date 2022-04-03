@@ -1,0 +1,23 @@
+.google-btn {
+    color: #fff;
+    text-decoration: none;
+    font-size: 12px;
+    padding: 10px;
+    background: #ff5353;
+    border-radius: 5px;
+    float: right;
+}
+
+.fb-btn {
+    color: #fff;
+    text-decoration: none;
+    font-size: 12px;
+    padding: 10px;
+    background: #0968ec;
+    border-radius: 5px;
+    float: right;
+}
+
+#logo {
+    float: right;
+}
