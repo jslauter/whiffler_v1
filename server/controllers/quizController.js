@@ -8,6 +8,7 @@ const { append } = require('express/lib/response');
 const yandexKey = process.env.YANDEXKEY
 const dictionaryapiKey = process.env.DICTIONARYAPIKEY
 const dictionaryApiBaseUrl = `https://www.dictionaryapi.com/api/v3/references/collegiate/json/`
+const bcrypt = require('bcrypt')
 
 
 /**
@@ -67,11 +68,25 @@ exports.quiz = async (req, res) => {
 
 /**
  * GET /
- * Home 
+ * Home / Register
 */
 exports.homepage = (req, res) => {
-    res.render('index', { title: 'Whiffler - Main Feed' } )
+    res.render('index', { title: 'Whiffler - Main Feed', user: req.user } )
    }
+
+   /**
+ * POST /
+ * Home /Register 
+*/
+exports.homePost = async (req, res) => {
+    try{
+        const hashedPassword = await bcrypt.hash(req.body.password, 10)
+        console.log(req.body.password)
+        res.redirect('/login')
+    }catch{
+        res.redirect('/')
+    }
+}
 
 /**
  * GET /
@@ -81,21 +96,6 @@ exports.profile = async  (req, res) => {
     res.render('profile', { user: req.user });
 }
 
-/**
- * GET /
- * Register 
-*/
-exports.register = async (req, res) => {
-    res.render('register', {title: 'Whiffler - Register Page'} )
-}
-
-/**
- * POST /
- * Register 
-*/
-exports.registerPost = async (req, res) => {
-    res.render('register', {title: 'Whiffler - Register Page'} )
-}
 
 /**
  * GET /
@@ -107,9 +107,9 @@ exports.login = async (req, res) => {
 
 /**
  * POST /
- * Login 
+ * home 
 */
-exports.loginPost = async (req, res) => {
+exports.homePost = async (req, res) => {
     res.render('login', {title: 'Whiffler - Quiz Page'} )
 }
 

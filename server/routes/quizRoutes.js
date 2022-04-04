@@ -10,31 +10,35 @@ const passport = require('passport')
 */
 const authCheck = (req, res, next)=>{
     if(!req.user){
-        res.redirect('/login')
+        res.redirect('/')
     }else{
         next()
     }
 }
 
-//home page
+//home GET page
 router.get('/', quizController.homepage)
 
-//profile page
+//home POST page
+router.post('/', quizController.homePost)
+
+// about GET page
+router.get('/about', (req, res)=>{
+    res.render('about')
+})
+
+//profile GET page
 router.get('/profile', authCheck, quizController.profile);
 
 
-//quiz page
+//quiz GET page
 router.get('/quiz', quizController.quiz)
 // router.post('/quiz', quizController.quizPost)
 
 
-//login page
+//login GET page
 router.get('/login', quizController.login)
-router.post('/login', quizController.loginPost)
-
-//register page MAIN PAGE
-router.get('/register', quizController.register)
-router.post('/register',  quizController.registerPost)
+// router.post('/login', quizController.loginPost)
 
 //register page / GOOGLE
 router.get('/google', passport.authenticate('google', {
@@ -55,7 +59,8 @@ router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
 // auth logout
 router.get('/logout', (req, res) => {
     // handle with passport
-    res.redirect('www.google.com');
+    req.logout()
+    res.redirect('/')
 });
 
 

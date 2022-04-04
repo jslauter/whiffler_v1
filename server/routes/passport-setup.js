@@ -12,7 +12,6 @@ passport.deserializeUser((id, done)=>{
     })
 })
 
-
 passport.use(
     new GoogleStrategy({
         // options for google strategy
@@ -20,6 +19,7 @@ passport.use(
         clientSecret: process.env.CLIENT_SECRET,
         callbackURL: '/google/redirect'
     }, (accessToken, refreshToken, profile, done) => {
+       console.log(profile)
         // passport callback function
         User.findOne({googleId: profile.id}).then((currentUser)=>{
             if(currentUser){
@@ -28,7 +28,8 @@ passport.use(
             }else{
                 new User({
                     username: profile.displayName,
-                    googleId: profile.id
+                    googleId: profile.id,
+                    thumbnail: profile._json.picture
                 }).save().then((newUser) => {
                     console.log('new user created:' + newUser)
                     done(null, newUser)

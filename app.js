@@ -7,7 +7,7 @@ require('dotenv').config()
 require('./server/models/database')
 const cookieSession = require('cookie-session')
 const passport = require('passport')
-
+app.use(express.urlencoded({ extended: false }))
 
 
 app.set('view engine', 'ejs')

@@ -23,6 +23,9 @@ const UserSchema = new Schema({
     },
     googleId: {
         type: String
+    },
+    thumbnail:{
+        type: String
     }
 })
 
