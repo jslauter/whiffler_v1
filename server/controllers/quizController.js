@@ -1,5 +1,5 @@
 require('../models/database')
-require('../models/User')
+const User = require('../models/User')
 require('../models/Quiz')
 const Quiz = require('../models/Quiz')
 const axios = require('axios')
@@ -8,7 +8,7 @@ const { append } = require('express/lib/response');
 const yandexKey = process.env.YANDEXKEY
 const dictionaryapiKey = process.env.DICTIONARYAPIKEY
 const dictionaryApiBaseUrl = `https://www.dictionaryapi.com/api/v3/references/collegiate/json/`
-const bcrypt = require('bcrypt')
+const { hashSync } = require('bcrypt');
 
 
 /**
@@ -79,22 +79,23 @@ exports.homepage = (req, res) => {
  * Home /Register 
 */
 exports.homePost = async (req, res) => {
-    try{
-        const hashedPassword = await bcrypt.hash(req.body.password, 10)
-        console.log(req.body.password)
-        res.redirect('/login')
-    }catch{
-        res.redirect('/')
-    }
+    let user = new User({
+        username: req.body.username,
+        password: hashSync(req.body.password, 10)
+    })
+
+    user.save().then(user => console.log(user));
+
+    res.redirect('login')
 }
 
 /**
  * GET /
- * Profile 
+ * Profile
 */
-exports.profile = async  (req, res) => {
-    res.render('profile', { user: req.user });
-}
+// exports.profile = async (req, res) => {
+//     res.send('/');
+// }
 
 
 /**
@@ -102,15 +103,21 @@ exports.profile = async  (req, res) => {
  * Login 
 */
 exports.login = async (req, res) => {
-    res.render('login', {title: 'Whiffler - Login Page'} )
+    res.render('login')
 }
 
 /**
- * POST /
- * home 
+ * GET /
+ * PROFILE 
 */
-exports.homePost = async (req, res) => {
-    res.render('login', {title: 'Whiffler - Quiz Page'} )
+exports.profile = async (req, res) => {
+    if (req.isAuthenticated()) {
+        res.render('profile', { user: req.user })
+    } else {
+        res.render('index')
+    }
+    console.log(req.session)
+    console.log(req.user)
 }
 
 /**
@@ -118,7 +125,7 @@ exports.homePost = async (req, res) => {
  * logout 
 */
 // exports.logout = (req, res) => {
-//     req.logout()
+//     req.logout();
 //     res.redirect('/login')
 // }
 
@@ -126,32 +133,6 @@ exports.homePost = async (req, res) => {
  * GET /
  * Google 
 */
-exports.google = async (req, res) => {
-    res.render('google')
-}
-
-
-
-//  screenname: {
-//         type: String,
-//     },
-//     correctWord: {
-//         type: String,
-//         required: true,
-//     },
-//     wrongWords: {
-//         type: String,
-//         required: true,
-//     },
-//     answer:{
-//         type: String
-//     },
-//     wrongAnswers:{
-//         type: Array
-//     },
-//     userSubmittedAnswer:{
-//         type: String
-//     },
-//     creatorPoint:{
-//         type: Number
-//     }
+// exports.google = async (req, res) => {
+//     res.render('google')
+// }

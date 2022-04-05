@@ -1,7 +1,9 @@
 const express = require('express')
 const router = express.Router()
 const quizController = require('../controllers/quizController')
-const passportSetup = require('./passport-setup')
+// const passportSetup = require('./passport-setup')
+// const usernameSetup = require('./username-setup')
+require('./username-setup')
 const passport = require('passport')
 
 
@@ -19,7 +21,7 @@ const authCheck = (req, res, next)=>{
 //home GET page
 router.get('/', quizController.homepage)
 
-//home POST page
+//home POST
 router.post('/', quizController.homePost)
 
 // about GET page
@@ -28,7 +30,7 @@ router.get('/about', (req, res)=>{
 })
 
 //profile GET page
-router.get('/profile', authCheck, quizController.profile);
+router.get('/profile', quizController.profile);
 
 
 //quiz GET page
@@ -40,16 +42,22 @@ router.get('/quiz', quizController.quiz)
 router.get('/login', quizController.login)
 // router.post('/login', quizController.loginPost)
 
+//login POST
+router.post('/login', passport.authenticate('local', { successRedirect: 'profile' }))
+
+//profile GET
+router.get('/profile', quizController.profile)
+
 //register page / GOOGLE
-router.get('/google', passport.authenticate('google', {
-    scope: ['profile']
-}));
+// router.get('/google', passport.authenticate('google', {
+//     scope: ['profile']
+// }));
 
 // callback route for google to redirect to
 // hand control to passport to use code to grab profile info
-router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
-    res.redirect('/profile/')
-});
+// router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
+//     res.redirect('/profile/')
+// });
 
 
 //register page / FACEBOOK
