@@ -5,6 +5,9 @@ const passportSetup = require('./passport-setup')
 // const usernameSetup = require('./username-setup')
 require('./username-setup')
 const passport = require('passport')
+// const methodOverride = require('method-override')
+
+// app.use(methodOverride('_method'))
 
 
 /**
@@ -37,6 +40,9 @@ router.get('/profile', quizController.profile);
 router.get('/quiz', quizController.quiz)
 
 //quiz POST route
+router.post('/quiz', quizController.quizPost)
+
+//quiz PUT route
 router.post('/quiz', quizController.quizPost)
 
 

@@ -17,12 +17,6 @@ const QuizSchema = new mongoose.Schema({
     userSubmittedDefinition:{
         type: String
     },
-    usersWhoAttempted: {
-        type: Array
-    },
-    category: {
-        type: String
-    },
     chosenDefinition: {
         type: String
     },
@@ -34,10 +28,16 @@ const QuizSchema = new mongoose.Schema({
     },
     userSubmittedWord:{
         type: String
+    },
+    category:{
+        type: String,
+        default: 0
+    },
+    usersWhoCompleted: {
+        type: Array,
+        default: []
     }
 })
 
-
-// quizSchema.index({ name: 'text', description: 'text' });
 
 module.exports = mongoose.model('Quiz', QuizSchema)
