@@ -133,6 +133,6 @@ exports.profile = async (req, res) => {
  * GET /
  * Google 
 */
-// exports.google = async (req, res) => {
-//     res.render('google')
-// }
+exports.google = async (req, res) => {
+    res.render('google')
+}
