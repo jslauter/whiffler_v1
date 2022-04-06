@@ -3,12 +3,14 @@ const User = require('../models/User')
 require('../models/Quiz')
 const Quiz = require('../models/Quiz')
 const axios = require('axios')
-var unirest = require("unirest");
-const { append } = require('express/lib/response');
+var unirest = require("unirest")
+const { append } = require('express/lib/response')
 const yandexKey = process.env.YANDEXKEY
 const dictionaryapiKey = process.env.DICTIONARYAPIKEY
 const dictionaryApiBaseUrl = `https://www.dictionaryapi.com/api/v3/references/collegiate/json/`
-const { hashSync } = require('bcrypt');
+const { hashSync } = require('bcrypt')
+const { RandomPicture } = require('random-picture')
+
 
 
 /**
@@ -62,7 +64,7 @@ exports.quizPost = async (req, res) => {
         wrongDefs: wrongDefinitions,
         userSubmittedAnswer: req.body.userDefinition
     })
-    quiz.save().then(quiz => console.log(quiz));
+    await quiz.save()
 
     res.redirect('profile')
 }
@@ -81,12 +83,19 @@ exports.homepage = (req, res) => {
  * Home /Register 
 */
 exports.homePost = async (req, res) => {
+    const image = await RandomPicture()
+    .then(url => {
+        return url;
+    })
+    
+    
     let user = new User({
         username: req.body.username,
-        password: hashSync(req.body.password, 10)
+        password: hashSync(req.body.password, 10),
+        thumbnail: image.url
     })
 
-    user.save().then(user => console.log(user));
+    await user.save()
 
     res.redirect('login')
 }
@@ -109,8 +118,6 @@ exports.profile = async (req, res) => {
     } else {
         res.render('index')
     }
-    console.log(req.session)
-    console.log(req.user)
 }
 
 /**
