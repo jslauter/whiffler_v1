@@ -11,12 +11,30 @@ const QuizSchema = new mongoose.Schema({
     wrongDefs: {
         type: Array,
     },
-    answer:{
+    correctDefinition:{
         type: String
     },
-    userSubmittedAnswer:{
+    userSubmittedDefinition:{
         type: String
     },
+    usersWhoAttempted: {
+        type: Array
+    },
+    category: {
+        type: String
+    },
+    chosenDefinition: {
+        type: String
+    },
+    correctWord: {
+        type: String
+    },
+    wrongWords:{
+        type: Array
+    },
+    userSubmittedWord:{
+        type: String
+    }
 })
 
 

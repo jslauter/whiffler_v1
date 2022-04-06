@@ -60,12 +60,12 @@ exports.quizPost = async (req, res) => {
     let quiz = new Quiz({
         quizCreator: req.user,
         chosenWord: wordArr[0],
-        answer:  wordArr[1],
+        correctDefinition:  wordArr[1],
         wrongDefs: wrongDefinitions,
-        userSubmittedAnswer: req.body.userDefinition
+        userSubmittedDefinition: req.body.userDefinition
     })
     await quiz.save()
-
+    console.log(quiz)
     res.redirect('profile')
 }
 
@@ -114,11 +114,12 @@ exports.login = async (req, res) => {
 */
 exports.profile = async (req, res) => {
     if (req.isAuthenticated()) {
-        res.render('profile', { user: req.user })
+        res.render('profile', { user: req.user, })
     } else {
         res.render('index')
     }
 }
+
 
 /**
  * GET /
