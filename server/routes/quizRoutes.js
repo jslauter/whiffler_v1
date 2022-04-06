@@ -5,6 +5,9 @@ const passportSetup = require('./passport-setup')
 // const usernameSetup = require('./username-setup')
 require('./username-setup')
 const passport = require('passport')
+const methodOverride = require('method-override')
+
+app.use(methodOverride('_method'))
 
 
 /**

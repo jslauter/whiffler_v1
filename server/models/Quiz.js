@@ -11,15 +11,21 @@ const QuizSchema = new mongoose.Schema({
     wrongDefs: {
         type: Array,
     },
-    answer:{
+    correctDefinition:{
         type: String
     },
-    userSubmittedAnswer:{
+    userSubmittedDefinition:{
         type: String
     },
+    category:{
+        type: String,
+        default: 0
+    },
+    usersWhoCompleted: {
+        type: Array,
+        default: []
+    }
 })
 
-
-// quizSchema.index({ name: 'text', description: 'text' });
 
 module.exports = mongoose.model('Quiz', QuizSchema)

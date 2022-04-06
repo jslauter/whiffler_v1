@@ -52,20 +52,32 @@ exports.quizPost = async (req, res) => {
     const wrongDefinitions = []
 
     const urbanWords = await urbanDictionary()
+    
     urbanWords.list.forEach((el)=>{
         wrongDefinitions.push(el.definition.split('. ', 1)[0].replace(/[\[\]']+/g,''))
     })
+
     const wordArr = req.body.quizWords.split(/,,/)
+
+    wrongDefinitions.splice(4)
+    wrongDefinitions.push(wordArr[1])
+    wrongDefinitions.push(req.body.userDefinition)
+
+    //shuffle definitions array
+    let shuffled = wrongDefinitions
+    .map(value => ({ value, sort: Math.random() }))
+    .sort((a, b) => a.sort - b.sort)
+    .map(({ value }) => value)
     
+    //create quiz
     let quiz = new Quiz({
-        quizCreator: req.user,
+        quizCreator: req.user.username,
         chosenWord: wordArr[0],
-        answer:  wordArr[1],
-        wrongDefs: wrongDefinitions,
-        userSubmittedAnswer: req.body.userDefinition
+        correctDefinition:  wordArr[1],
+        wrongDefs: shuffled,
+        userSubmittedDefinition: req.body.userDefinition
     })
     await quiz.save()
-
     res.redirect('profile')
 }
 
@@ -114,7 +126,9 @@ exports.login = async (req, res) => {
 */
 exports.profile = async (req, res) => {
     if (req.isAuthenticated()) {
-        res.render('profile', { user: req.user })
+        const limitNumber = 10
+        const quizzes = await Quiz.find({}).limit(limitNumber)
+        res.render('profile', { user: req.user, quizzes })
     } else {
         res.render('index')
     }
