@@ -20,31 +20,13 @@ exports.homepage = (req, res) => {
 }
 
 
-
-// Fetch Words
-const getDictionaryWord = async()=>{
-    const res = await axios.get(`https://random-word-api.herokuapp.com/word?number=4`)
-    return res.data
-}
-
-//Create Word:Defintion Object
-const getDefinitions = async()=>{
-    const words = await getDictionaryWord()
-    const wordDefinitionObj = {}
-
-    for(const word of words){
-        const definitions = await axios.get(`${dictionaryApiBaseUrl}${word}?key=${dictionaryapiKey}`)
-        wordDefinitionObj[word] = definitions.data[0].shortdef[0]
-    }
-    return wordDefinitionObj
-}
-
 //Fetch UrbanDicitonary
 const urbanDictionary = async()=>{
     const res = await axios.get(`https://api.urbandictionary.com/v0/random`)
     return res.data
 }
 
+const wordDefinitionObj = {}
 
 /**
  * GET /
@@ -52,17 +34,37 @@ const urbanDictionary = async()=>{
 */
 exports.quiz = async (req, res) => {
     const wordDefinitionObj = {}
-    const wrongDefintionObj = []
 
     const urbanWords = await urbanDictionary()
     urbanWords.list.forEach((el)=>{
         wordDefinitionObj[el.word] = el.definition.split('. ', 1)[0].replace(/[\[\]']+/g,'')
     })
-    // const wrongDefs = await urbanDictionary()
-    // wrongDefs.list.forEach((el)=>{
-    //     wrongDefintionObj.push(el.definition.split('. ', 1)[0].replace(/[\[\]']+/g,''))
-    // })
     res.render('quiz', {title: 'Whiffler - Quiz Page', wordDefinitionObj} )
+}
+
+/**
+ * POST /
+ * Quiz 
+*/
+exports.quizPost = async (req, res) => {
+    const wrongDefinitions = []
+
+    const urbanWords = await urbanDictionary()
+    urbanWords.list.forEach((el)=>{
+        wrongDefinitions.push(el.definition.split('. ', 1)[0].replace(/[\[\]']+/g,''))
+    })
+    const wordArr = req.body.quizWords.split(/,,/)
+    
+    let quiz = new Quiz({
+        quizCreator: req.user,
+        chosenWord: wordArr[0],
+        answer:  wordArr[1],
+        wrongDefs: wrongDefinitions,
+        userSubmittedAnswer: req.body.userDefinition
+    })
+    quiz.save().then(quiz => console.log(quiz));
+
+    res.redirect('profile')
 }
 
 
@@ -91,15 +93,6 @@ exports.homePost = async (req, res) => {
 
 /**
  * GET /
- * Profile
-*/
-// exports.profile = async (req, res) => {
-//     res.send('/');
-// }
-
-
-/**
- * GET /
  * Login 
 */
 exports.login = async (req, res) => {
@@ -122,17 +115,27 @@ exports.profile = async (req, res) => {
 
 /**
  * GET /
- * logout 
-*/
-// exports.logout = (req, res) => {
-//     req.logout();
-//     res.redirect('/login')
-// }
-
-/**
- * GET /
  * Google 
 */
 exports.google = async (req, res) => {
     res.render('google')
 }
+
+// Fetch Words
+// const getDictionaryWord = async()=>{
+//     const res = await axios.get(`https://random-word-api.herokuapp.com/word?number=4`)
+//     return res.data
+// }
+
+
+//Create Word:Defintion Object
+// const getDefinitions = async()=>{
+//     const words = await getDictionaryWord()
+//     const wordDefinitionObj = {}
+
+//     for(const word of words){
+//         const definitions = await axios.get(`${dictionaryApiBaseUrl}${word}?key=${dictionaryapiKey}`)
+//         wordDefinitionObj[word] = definitions.data[0].shortdef[0]
+//     }
+//     return wordDefinitionObj
+// }

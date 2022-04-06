@@ -2,29 +2,21 @@ const mongoose = require('mongoose')
 
 
 const QuizSchema = new mongoose.Schema({
-    screenname: {
+    quizCreator: {
         type: String,
     },
-    correctWord: {
+    chosenWord: {
         type: String,
-        required: true,
     },
-    wrongWords: {
-        type: String,
-        required: true,
+    wrongDefs: {
+        type: Array,
     },
     answer:{
         type: String
     },
-    wrongAnswers:{
-        type: Array
-    },
     userSubmittedAnswer:{
         type: String
     },
-    creatorPoint:{
-        type: Number
-    }
 })
 
 

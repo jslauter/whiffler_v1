@@ -35,7 +35,9 @@ router.get('/profile', quizController.profile);
 
 //quiz GET page
 router.get('/quiz', quizController.quiz)
-// router.post('/quiz', quizController.quizPost)
+
+//quiz POST route
+router.post('/quiz', quizController.quizPost)
 
 
 //login GET page

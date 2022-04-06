@@ -82,45 +82,101 @@
                                 <p class="h5 text-center m-4">Choose a word and write a fake definition for it below
                                 </p>
 
-                                <form action="">
+                                <form action="quiz" method="POST">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="word1" id="word1">
+                                        <input class="form-check-input" type="radio" name="quizWords"
+                                            value="<%-[Object.keys(wordDefinitionObj)[0],,Object.values(wordDefinitionObj)[0]]%>"
+                                            id="word1">
                                         <label class="form-check-label" for="word1">
                                             <strong><%-Object.keys(wordDefinitionObj)[0]%></strong> :
                                             <%-Object.values(wordDefinitionObj)[0]%>
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="word2" id="word2">
+                                        <input class="form-check-input" type="radio" name="quizWords"
+                                            value="<%-[Object.keys(wordDefinitionObj)[1],,Object.values(wordDefinitionObj)[1]]%>"
+                                            id="word2">
                                         <label class="form-check-label" for="word2">
                                             <strong><%-Object.keys(wordDefinitionObj)[1]%></strong> :
                                             <%-Object.values(wordDefinitionObj)[1]%>
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="word3" id="word3">
+                                        <input class="form-check-input" type="radio" name="quizWords"
+                                            value="<%-[Object.keys(wordDefinitionObj)[2],,Object.values(wordDefinitionObj)[2]]%>"
+                                            id="word3">
                                         <label class="form-check-label" for="word3">
                                             <strong><%-Object.keys(wordDefinitionObj)[2]%></strong> :
                                             <%-Object.values(wordDefinitionObj)[2]%>
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="word4" id="word4">
+                                        <input class="form-check-input" type="radio" name="quizWords"
+                                            value="<%-[Object.keys(wordDefinitionObj)[3],,Object.values(wordDefinitionObj)[3]]%>"
+                                            id="word4">
                                         <label class="form-check-label" for="word4">
                                             <strong><%-Object.keys(wordDefinitionObj)[3]%></strong> :
                                             <%-Object.values(wordDefinitionObj)[3]%>
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="word5" id="word5">
+                                        <input class="form-check-input" type="radio" name="quizWords"
+                                            value="<%-[Object.keys(wordDefinitionObj)[4],,Object.values(wordDefinitionObj)[4]]%>"
+                                            id="word5">
                                         <label class="form-check-label" for="word5">
                                             <strong><%-Object.keys(wordDefinitionObj)[4]%></strong> :
                                             <%-Object.values(wordDefinitionObj)[4]%>
                                         </label>
                                     </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="quizWords"
+                                            value="<%-[Object.keys(wordDefinitionObj)[5],,Object.values(wordDefinitionObj)[5]]%>"
+                                            id="word6">
+                                        <label class="form-check-label" for="word6">
+                                            <strong><%-Object.keys(wordDefinitionObj)[5]%></strong> :
+                                            <%-Object.values(wordDefinitionObj)[5]%>
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="quizWords"
+                                            value="<%-[Object.keys(wordDefinitionObj)[6],,Object.values(wordDefinitionObj)[6]]%>"
+                                            id="word7">
+                                        <label class="form-check-label" for="word7">
+                                            <strong><%-Object.keys(wordDefinitionObj)[6]%></strong> :
+                                            <%-Object.values(wordDefinitionObj)[6]%>
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="quizWords"
+                                            value="<%-[Object.keys(wordDefinitionObj)[7],,Object.values(wordDefinitionObj)[7]]%>"
+                                            id="word8">
+                                        <label class="form-check-label" for="word8">
+                                            <strong><%-Object.keys(wordDefinitionObj)[7]%></strong> :
+                                            <%-Object.values(wordDefinitionObj)[7]%>
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="quizWords"
+                                            value="<%-[Object.keys(wordDefinitionObj)[8],,Object.values(wordDefinitionObj)[8]]%>"
+                                            id="word9">
+                                        <label class="form-check-label" for="word9">
+                                            <strong><%-Object.keys(wordDefinitionObj)[8]%></strong> :
+                                            <%-Object.values(wordDefinitionObj)[8]%>
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="quizWords"
+                                            value="<%-[Object.keys(wordDefinitionObj)[9],,Object.values(wordDefinitionObj)[9]]%>"
+                                            id="word10">
+                                        <label class="form-check-label" for="word10">
+                                            <strong><%-Object.keys(wordDefinitionObj)[9]%></strong> :
+                                            <%-Object.values(wordDefinitionObj)[9]%>
+                                        </label>
+                                    </div>
                                     <div class="form-outline my-4">
                                         <textarea class="form-control" id="textAreaExample6" rows="3"
-                                            placeholder="Write your definition here" name="userDefinition"></textarea>
+                                            placeholder="Write your definition here" name="userDefinition"
+                                            required></textarea>
                                         <label class="form-label" for="textAreaExample6"></label>
                                     </div>
                                     <div class="button-wrapper text-center">
