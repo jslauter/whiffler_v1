@@ -95,11 +95,11 @@
 
                             <p class="card-text">
                                 <p class="h5 text-center">Choose the Correct Definition</p>
-                                <form action="quiz" method="POST">
-                                    <% quiz.wrongDefs.forEach(function(def){%>
+                                <form action="/quiz/<%=quiz._id%>?_method=PUT" method="POST">
+                                    <% quiz.wrongDefs.forEach(function(def, index){%>
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                            id="flexRadioDefault1" required>
+                                            id="flexRadioDefault1" value="<%-def%>" required>
                                         <label class="form-check-label" for="flexRadioDefault1">
                                             <%-def %>
                                         </label>

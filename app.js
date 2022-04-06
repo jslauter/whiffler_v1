@@ -7,7 +7,11 @@ require('dotenv').config()
 require('./server/models/database')
 const passport = require('passport')
 app.use(express.urlencoded({ extended: false }))
-const MongoDBStore = require('connect-mongodb-session')(session);
+const MongoDBStore = require('connect-mongodb-session')(session)
+
+const methodOverride = require('method-override')
+
+app.use(methodOverride('_method'))
 
 app.set('view engine', 'ejs')
 

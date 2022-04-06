@@ -4,7 +4,7 @@ require('../models/Quiz')
 const Quiz = require('../models/Quiz')
 const axios = require('axios')
 var unirest = require("unirest")
-const { append } = require('express/lib/response')
+const { append, render } = require('express/lib/response')
 const yandexKey = process.env.YANDEXKEY
 const dictionaryapiKey = process.env.DICTIONARYAPIKEY
 const dictionaryApiBaseUrl = `https://www.dictionaryapi.com/api/v3/references/collegiate/json/`
@@ -39,10 +39,12 @@ exports.quiz = async (req, res) => {
 
     const urbanWords = await urbanDictionary()
     urbanWords.list.forEach((el)=>{
-        wordDefinitionObj[el.word] = el.definition.split('. ', 1)[0].replace(/[\[\]']+/g,'')
+        
+        wordDefinitionObj[el.word] = el.definition.replace(/[\[\]']+/g,'').split('. ', 1)[0]
     })
     res.render('quiz', {title: 'Whiffler - Quiz Page', wordDefinitionObj} )
 }
+
 
 /**
  * POST /
@@ -55,12 +57,16 @@ exports.quizPost = async (req, res) => {
     
     urbanWords.list.forEach((el)=>{
         wrongDefinitions.push(el.definition.split('. ', 1)[0].replace(/[\[\]']+/g,''))
+        console.log(el.definition.split('. ', 1)[0])
     })
 
     const wordArr = req.body.quizWords.split(/,,/)
 
     wrongDefinitions.splice(4)
+    //correct definition
     wrongDefinitions.push(wordArr[1])
+
+    //user submitted definition
     wrongDefinitions.push(req.body.userDefinition)
 
     //shuffle definitions array
@@ -81,6 +87,30 @@ exports.quizPost = async (req, res) => {
     res.redirect('profile')
 }
 
+
+/**
+ * PUT /
+ * Home / Register
+*/
+exports.quizSubmit = async (req, res) => {
+    try {
+        const quiz = await Quiz.findById(req.params.id)
+
+        if(req.body.flexRadioDefault == quiz.correctDefinition){
+            await User.findOneAndUpdate({username : req.user.username},{$inc: { score: 2 }})
+        }else if(req.body.flexRadioDefault == quiz.userSubmittedDefinition){
+            await User.findOneAndUpdate({username : quiz.quizCreator},{$inc: { score: 1 }})
+        }
+        //add user to users who've completed array here
+
+        //figure out redirect
+
+
+        }catch (err) {
+        console.log(err)
+      }
+      res.redirect('/profile/')
+    }
 
 /**
  * GET /

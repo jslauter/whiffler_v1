@@ -5,9 +5,7 @@ const passportSetup = require('./passport-setup')
 // const usernameSetup = require('./username-setup')
 require('./username-setup')
 const passport = require('passport')
-// const methodOverride = require('method-override')
 
-// app.use(methodOverride('_method'))
 
 
 /**
@@ -43,12 +41,11 @@ router.get('/quiz', quizController.quiz)
 router.post('/quiz', quizController.quizPost)
 
 //quiz PUT route
-router.post('/quiz', quizController.quizPost)
+router.put('/quiz/:id', quizController.quizSubmit)
 
 
 //login GET page
 router.get('/login', quizController.login)
-// router.post('/login', quizController.loginPost)
 
 //login POST
 router.post('/login', passport.authenticate(['local', 'basic', 'passport-google-oauth'], { successRedirect: 'profile' }))
