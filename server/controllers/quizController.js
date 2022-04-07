@@ -156,15 +156,18 @@ exports.profile = async (req, res) => {
         if (req.isAuthenticated()) {
             const quizzes = await Quiz.find({}).limit(5)
             const leaders = await User.find({}).sort({score: -1}).limit(6)
-            res.render('profile', { user: req.user, quizzes,leaders})
+            const ranking = await User.find({}).sort({score: -1})
+            //**** */
+            const currentUser = await User.find({user: req.user.username})
+            const index = ranking.findIndex(item => item.username === req.user.username) + 1
+            res.render('profile', { user: req.user, quizzes,leaders, index})
         } else {
             res.render('index')
         }
     }catch(error){
-        res.satus(500).send({message: error.message || "Error Occured" })
+        res.status(500).send({message: error.message || "Error Occured" })
     }
 }
-
 
 
 /**
