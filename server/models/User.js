@@ -16,10 +16,12 @@ const UserSchema = new Schema({
         default: 0
     },
     username: {
-        type: String
+        type: String,
+        unique: true,
     },
     googleId: {
-        type: String
+        type: String,
+        unique: true
     },
     thumbnail:{
         type: String

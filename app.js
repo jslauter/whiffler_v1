@@ -36,6 +36,12 @@ const store = new MongoDBStore({
 app.use(passport.initialize())
 app.use(passport.session())
 
+app.use((req, res, next)=>{
+    res.locals.message = req.session.message
+    delete req.session.message
+    next()
+  })
+
 
 const routes = require('./server/routes/quizRoutes.js')
 app.use('/', routes)

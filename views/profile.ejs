@@ -21,24 +21,44 @@
 <link
     href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=Rubik:ital,wght@0,500;1,300&display=swap"
     rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="styles.css">
 
 <body style="font-family: 'IBM Plex Mono', monospace;">
-    <div class="container-xxl px-md-5 bg-white shadow-lg">
+    <div class="container-xxl px-md-5 bg-white shadow-lg order-med-2">
         <header
             class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
             <a href="/profile" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
-                <h3 class="display-5 text-primary">Whiffler <img src="https://i.imgur.com/7UHoXUK.png" class="w-25"
-                        alt="">
-                </h3>
+                <h3 class="display-4 text-primary text-right mx-3">Whiffler</h3> <img
+                    src="https://i.imgur.com/7UHoXUK.png" class="w-25" alt="">
             </a>
 
-            <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="/logout" class="nav-link px-2 link-secondary">Logout /</a></li>
-                <li><a href="/about" class="nav-link px-2 link-secondary">How to Play /</a></li>
-                <li><a href="/contact" class="nav-link px-2 link-secondary">Contact /</a></li>
-                <li><a href="/quiz" class="nav-link px-2 link-secondary">Create a Whiffler</a></li>
-            </ul>
+
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <a class="navbar-brand" href="#"></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item active px-1">
+                            <a class="nav-link-primary" href="/logout">Logout / <span
+                                    class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link-primary px-1" href="/about">How To Play / </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link-primary px-1" href="/contact">Contact / </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link-primary px-1" href="/quiz">Create a Whiffler</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
         </header>
 
 
@@ -55,20 +75,40 @@
                         </div>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">
-                                <div class="h6 text-muted">Ranking</div>
+                                <div class="h6 text-muted">Ranking #</div>
                                 <div class="h5"><%-index %> </div>
                             </li>
                             <li class="list-group-item">
-                                <div class="h6 text-muted">Score</div>
+                                <div class="h6 text-muted">Total Points</div>
                                 <div class="h5"><%-user.score %> </div>
                             </li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-md-6 gedf-main">
+
+                    <% if(message) {%>
+                    <div style="text-align: center" class="alert alert-<%message.type%>">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong><%=message.intro %> </strong><%=message.message %>
+                    </div>
+                    <% } %>
+
                     <!--- \\\\\\\Post-->
-                    <% quizzes.forEach(function(quiz,index){ %>
-                    <% if(!quiz.usersWhoCompleted.includes(user.username)) {%>
+
+                    <% let quizForFeed = []%>
+
+                    <% quizzes.forEach((quiz)=>{%>
+                    <%  if(!quiz.usersWhoCompleted.includes(user.username)){%>
+                    <%   quizForFeed.push(quiz)%>
+                    <%  }%>
+                    <% })%>
+                    <% if(quizForFeed.length == 0){%>
+                    <h1>No more quizzes, wait for more to be created :)</h1>
+                    <%}%>
+
+
+                    <% quizForFeed.forEach(function(quiz,index){ %>
                     <div class="card gedf-card">
                         <div class="card-header">
                             <div class="d-flex justify-content-between align-items-center">
@@ -114,12 +154,11 @@
                         </div>
                     </div>
                     <br>
-                    <% } %>
                     <%  }) %>
                 </div>
                 <div class="col-md-3">
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header bg-warning">
                             Leaderboard
                         </div>
                         <ul class="list-group list-group-flush">
@@ -127,21 +166,10 @@
                             <li class="list-group-item"><%-leader.username %> : <%- leader.score %> </li>
                             <%}) %>
                         </ul>
-                        <!-- <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Cras justo odio</li>
-                            <li class="list-group-item">Dapibus ac facilisis in</li>
-                            <li class="list-group-item">Vestibulum at eros</li>
-                            <li class="list-group-item">Cras justo odio</li>
-                            <li class="list-group-item">Dapibus ac facilisis in</li>
-                            <li class="list-group-item">Vestibulum at eros</li>
-                        </ul> -->
                     </div>
                 </div>
             </div>
         </div>
-        <div class="text-center"><a href="/profile"><button class="btn btn-success btn-sm m-3">Refresh For
-                    More
-                    Quizzes</button></a></div>
     </div>
 
     <footer class="py-5 text-center">

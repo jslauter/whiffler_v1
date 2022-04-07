@@ -36,7 +36,6 @@ const wordDefinitionObj = {}
 */
 exports.quiz = async (req, res) => {
     const wordDefinitionObj = {}
-
     const urbanWords = await urbanDictionary()
     urbanWords.list.forEach((el)=>{
         let currWord = el.word.toLowerCase()
@@ -93,8 +92,8 @@ exports.quizPost = async (req, res) => {
 
 
 /**
- * PUT /
- * Home / Register
+ * PUT / QUIZ
+ * main feed 
 */
 exports.quizSubmit = async (req, res) => {
     try {
@@ -102,9 +101,27 @@ exports.quizSubmit = async (req, res) => {
 
         if(req.body.flexRadioDefault == quiz.correctDefinition){
             await User.findOneAndUpdate({username : req.user.username},{$inc: { score: 2 }})
+            req.session.message = {
+                type: 'danger',
+                intro: 'CONGRATS! ',
+                message: 'You chose the CORRECT answer!!'
+              }
         }else if(req.body.flexRadioDefault == quiz.userSubmittedDefinition){
             await User.findOneAndUpdate({username : quiz.quizCreator},{$inc: { score: 1 }})
+            req.session.message = {
+                type: 'danger',
+                intro: 'HAHA!!',
+                message: `You chose ${quiz.quizCreator}'s answer!!`
+              }
+        }else if(req.body.flexRadioDefault != quiz.userSubmittedDefinition && req.body.flexRadioDefault != quiz.correctDefinition){
+            await User.findOneAndUpdate({username : quiz.quizCreator},{$inc: { score: 1 }})
+            req.session.message = {
+                type: 'danger',
+                intro: 'FAIL!!',
+                message: 'You chose your POORLY!!'
+              }
         }
+
         await Quiz.findByIdAndUpdate({_id: req.params.id}, {$push: {usersWhoCompleted: req.user.username},})
         }catch (err) {
         console.log(err)
@@ -125,7 +142,8 @@ exports.homepage = (req, res) => {
  * Home /Register 
 */
 exports.homePost = async (req, res) => {
-    const image = await RandomPicture()
+    try{
+            const image = await RandomPicture()
     .then(url => {
         return url;
     })
@@ -140,6 +158,9 @@ exports.homePost = async (req, res) => {
     await user.save()
 
     res.redirect('login')
+    }catch(e){
+        res.send(e)
+    }
 }
 
 /**
@@ -157,7 +178,7 @@ exports.login = async (req, res) => {
 exports.profile = async (req, res) => {
     try{
         if (req.isAuthenticated()) {
-            const quizzes = await Quiz.find({}).limit(5)
+            const quizzes = await Quiz.find({}).limit(15)
             const leaders = await User.find({}).sort({score: -1}).limit(6)
             const ranking = await User.find({}).sort({score: -1})
             const currentUser = await User.find({user: req.user.username})
