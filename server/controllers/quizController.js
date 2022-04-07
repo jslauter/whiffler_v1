@@ -57,7 +57,6 @@ exports.quizPost = async (req, res) => {
     
     urbanWords.list.forEach((el)=>{
         wrongDefinitions.push(el.definition.split('. ', 1)[0].replace(/[\[\]']+/g,''))
-        console.log(el.definition.split('. ', 1)[0])
     })
 
     const wordArr = req.body.quizWords.split(/,,/)
@@ -81,7 +80,9 @@ exports.quizPost = async (req, res) => {
         chosenWord: wordArr[0],
         correctDefinition:  wordArr[1],
         wrongDefs: shuffled,
-        userSubmittedDefinition: req.body.userDefinition
+        userSubmittedDefinition: req.body.userDefinition,
+        usersWhoCompleted: req.user.username,
+        quizCreatorThumbnail: req.user.thumbnail
     })
     await quiz.save()
     res.redirect('profile')
@@ -101,11 +102,7 @@ exports.quizSubmit = async (req, res) => {
         }else if(req.body.flexRadioDefault == quiz.userSubmittedDefinition){
             await User.findOneAndUpdate({username : quiz.quizCreator},{$inc: { score: 1 }})
         }
-        //add user to users who've completed array here
-
-        //figure out redirect
-
-
+        await Quiz.findByIdAndUpdate({_id: req.params.id}, {$push: {usersWhoCompleted: req.user.username},})
         }catch (err) {
         console.log(err)
       }
@@ -155,14 +152,19 @@ exports.login = async (req, res) => {
  * PROFILE 
 */
 exports.profile = async (req, res) => {
-    if (req.isAuthenticated()) {
-        const limitNumber = 10
-        const quizzes = await Quiz.find({}).limit(limitNumber)
-        res.render('profile', { user: req.user, quizzes })
-    } else {
-        res.render('index')
+    try{
+        if (req.isAuthenticated()) {
+            const quizzes = await Quiz.find({}).limit(5)
+            const leaders = await User.find({}).sort({score: -1}).limit(6)
+            res.render('profile', { user: req.user, quizzes,leaders})
+        } else {
+            res.render('index')
+        }
+    }catch(error){
+        res.satus(500).send({message: error.message || "Error Occured" })
     }
 }
+
 
 
 /**

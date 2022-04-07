@@ -5,6 +5,9 @@ const QuizSchema = new mongoose.Schema({
     quizCreator: {
         type: String,
     },
+    quizCreatorThumbnail: {
+        type: String,
+    },
     chosenWord: {
         type: String,
     },
@@ -24,7 +27,7 @@ const QuizSchema = new mongoose.Schema({
         type: String
     },
     wrongWords:{
-        type: Array
+        type: Array,
     },
     userSubmittedWord:{
         type: String
@@ -33,10 +36,9 @@ const QuizSchema = new mongoose.Schema({
         type: String,
         default: 0
     },
-    usersWhoCompleted: {
-        type: Array,
-        default: []
-    }
+    usersWhoCompleted: [{
+        type: String
+    }]
 })
 
 

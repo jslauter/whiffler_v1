@@ -60,7 +60,7 @@
                             </li>
                             <li class="list-group-item">
                                 <div class="h6 text-muted">Score</div>
-                                <div class="h5">6758</div>
+                                <div class="h5"><%-user.score %> </div>
                             </li>
                         </ul>
                     </div>
@@ -68,13 +68,14 @@
                 <div class="col-md-6 gedf-main">
                     <!--- \\\\\\\Post-->
                     <% quizzes.forEach(function(quiz,index){ %>
-                    <% if(quiz.quizCreator != user.username) {%>
+                    <% if(!quiz.usersWhoCompleted.includes(user.username)) {%>
                     <div class="card gedf-card">
                         <div class="card-header">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="mr-2">
-                                        <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
+                                        <img class="rounded-circle" width="45" height="45"
+                                            src="<%-quiz.quizCreatorThumbnail %> " alt="">
                                     </div>
                                     <div class="ml-2">
                                         <div class="h6 m-0"><%-quiz.quizCreator%>'s Quiz </div>
@@ -122,13 +123,18 @@
                             Leaderboard
                         </div>
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Cras justo odio</li>
-                            <li class="list-group-item">Dapibus ac facilisis in</li>
-                            <li class="list-group-item">Vestibulum at eros</li>
-                            <li class="list-group-item">Cras justo odio</li>
-                            <li class="list-group-item">Dapibus ac facilisis in</li>
-                            <li class="list-group-item">Vestibulum at eros</li>
+                            <% leaders.forEach((leader)=>{%>
+                            <li class="list-group-item"><%-leader.username %> : <%- leader.score %> </li>
+                            <%}) %>
                         </ul>
+                        <!-- <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Cras justo odio</li>
+                            <li class="list-group-item">Dapibus ac facilisis in</li>
+                            <li class="list-group-item">Vestibulum at eros</li>
+                            <li class="list-group-item">Cras justo odio</li>
+                            <li class="list-group-item">Dapibus ac facilisis in</li>
+                            <li class="list-group-item">Vestibulum at eros</li>
+                        </ul> -->
                     </div>
                 </div>
             </div>
