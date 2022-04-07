@@ -77,6 +77,8 @@ router.get('/logout', (req, res) => {
     res.redirect('/')
 });
 
+//about GET page
+router.get('/contact', quizController.contact)
 
 
 module.exports = router

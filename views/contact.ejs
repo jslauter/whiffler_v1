@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <title>Contact</title>
+</head>
+
+<body>
+    <div class="container-xxl px-md-5 bg-white shadow-lg">
+        <header
+            class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+            <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+                <h3 class="display-5 text-primary">Whiffler <img src="https://i.imgur.com/7UHoXUK.png" class="w-25"
+                        alt="">
+                </h3>
+            </a>
+
+            <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+                <li><a href="/about" class="nav-link px-2 link-secondary">How to Play /</a></li>
+                <li><a href="/" class="nav-link px-2 link-secondary">Login|Signup</a></li>
+            </ul>
+        </header>
+
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container-fluid text-center">
+                <h1 class="display-4">Whiffler - Los Angles, CA</h1>
+
+                <section id="contact">
+                    <div class="container-lg">
+
+                        <div class="text-center">
+                            <p class="lead">Any questions, just ask.</p>
+                        </div>
+                        <div class="row justify-content-center my-5">
+                            <div class="col-lg-6">
+
+                                <form action="https://formsubmit.co/jonathanslauter@gmail.com" method="POST">
+                                    <label for="email" class="form-label">Email address:</label>
+                                    <div class="input-group mb-4">
+                                        <span class="input-group-text">
+                                            <i class="bi bi-envelope-fill text-secondary"></i>
+                                        </span>
+                                        <input type="text" id="email" name="email" class="form-control"
+                                            placeholder="e.g. mail@example.com" />
+                                        <!-- tooltip -->
+                                        <span class="input-group-text">
+                                            <span class="tt" data-bs-placement="bottom"
+                                                title="Enter an email address we can reply to.">
+                                                <i class="bi bi-question-circle text-muted"></i>
+                                            </span>
+                                        </span>
+                                    </div>
+                                    <label for="name" class="form-label">Name:</label>
+                                    <div class="mb-4 input-group">
+                                        <span class="input-group-text">
+                                            <i class="bi bi-person-fill text-secondary"></i>
+                                        </span>
+                                        <input type="text" id="name" name="name" class="form-control"
+                                            placeholder="e.g. Jon" />
+                                        <!-- tooltip -->
+                                        <span class="input-group-text">
+                                            <span class="tt" data-bs-placement="bottom"
+                                                title="Pretty self explanatory really...">
+                                                <i class="bi bi-question-circle text-muted"></i>
+                                            </span>
+                                        </span>
+                                    </div>
+                                    <label for="subject" class="form-label">What is your question about?</label>
+                                    <div class="mb-4 input-group">
+                                    </div>
+                                    <div class="mb-4 mt-5 form-floating">
+                                        <textarea class="form-control" name="textarea" id="query" style="height: 140px"
+                                            placeholder="query"></textarea>
+                                        <label for="query">Your query...</label>
+                                    </div>
+                                    <div class="mb-4 text-center">
+                                        <button type="submit" class="btn btn-success">Submit</button>
+                                    </div>
+                                    <input type="text" name="_honey" style="display:none">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

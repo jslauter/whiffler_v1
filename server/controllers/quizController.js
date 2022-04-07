@@ -178,6 +178,11 @@ exports.google = async (req, res) => {
     res.render('google')
 }
 
+exports.contact = (req, res) => {
+    res.render('contact', { title: 'Whiffler - About Page'} )
+   }
+
+
 // Fetch Words
 // const getDictionaryWord = async()=>{
 //     const res = await axios.get(`https://random-word-api.herokuapp.com/word?number=4`)

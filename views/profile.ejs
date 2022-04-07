@@ -34,9 +34,9 @@
             </a>
 
             <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="/logout" class="nav-link px-2 link-secondary">Logout</a></li>
-                <li><a href="/about" class="nav-link px-2 link-secondary">About</a></li>
-                <li><a href="/contact" class="nav-link px-2 link-secondary">Contact</a></li>
+                <li><a href="/logout" class="nav-link px-2 link-secondary">Logout /</a></li>
+                <li><a href="/about" class="nav-link px-2 link-secondary">How to Play /</a></li>
+                <li><a href="/contact" class="nav-link px-2 link-secondary">Contact /</a></li>
                 <li><a href="/quiz" class="nav-link px-2 link-secondary">Create a Whiffler</a></li>
             </ul>
         </header>
@@ -95,7 +95,7 @@
                             </a>
 
                             <p class="card-text">
-                                <p class="h5 text-center">Choose the Correct Definition</p>
+                                <p class="h5 text-center my-4">Choose the Correct Definition</p>
                                 <form action="/quiz/<%=quiz._id%>?_method=PUT" method="POST">
                                     <% quiz.wrongDefs.forEach(function(def, index){%>
                                     <div class="form-check">
