@@ -39,9 +39,13 @@ exports.quiz = async (req, res) => {
 
     const urbanWords = await urbanDictionary()
     urbanWords.list.forEach((el)=>{
-        
-        wordDefinitionObj[el.word] = el.definition.replace(/[\[\]']+/g,'').split('. ', 1)[0]
+        let currWord = el.word
+        let currDef = el.definition.replace(/[\[\]']+/g,'').split('.', 1)[0]
+        let cleanedDef = currDef.replace(currWord," ")
+        wordDefinitionObj[el.word] = cleanedDef
+        console.log(wordDefinitionObj)
     })
+
     res.render('quiz', {title: 'Whiffler - Quiz Page', wordDefinitionObj} )
 }
 
@@ -52,7 +56,6 @@ exports.quiz = async (req, res) => {
 */
 exports.quizPost = async (req, res) => {
     const wrongDefinitions = []
-
     const urbanWords = await urbanDictionary()
     
     urbanWords.list.forEach((el)=>{
@@ -157,7 +160,6 @@ exports.profile = async (req, res) => {
             const quizzes = await Quiz.find({}).limit(5)
             const leaders = await User.find({}).sort({score: -1}).limit(6)
             const ranking = await User.find({}).sort({score: -1})
-            //**** */
             const currentUser = await User.find({user: req.user.username})
             const index = ranking.findIndex(item => item.username === req.user.username) + 1
             res.render('profile', { user: req.user, quizzes,leaders, index})
