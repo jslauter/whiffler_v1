@@ -39,8 +39,8 @@ exports.quiz = async (req, res) => {
 
     const urbanWords = await urbanDictionary()
     urbanWords.list.forEach((el)=>{
-        let currWord = el.word
-        let currDef = el.definition.replace(/[\[\]']+/g,'').split('.', 1)[0]
+        let currWord = el.word.toLowerCase()
+        let currDef = el.definition.replace(/[\[\]']+/g,'').split('.', 1)[0].toLowerCase()
         let cleanedDef = currDef.replace(currWord," ")
         wordDefinitionObj[el.word] = cleanedDef
         console.log(wordDefinitionObj)
