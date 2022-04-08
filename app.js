@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const PORT = process.env.PORT || 3000
 const session = require('express-session')
 require('dotenv').config()
-require('./server/models/database')
+require('./server/models/Database')
 const passport = require('passport')
 app.use(express.urlencoded({ extended: false }))
 const MongoDBStore = require('connect-mongodb-session')(session)
