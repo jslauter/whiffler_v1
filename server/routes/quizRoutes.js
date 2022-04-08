@@ -19,6 +19,11 @@ const authCheck = (req, res, next)=>{
     }
 }
 
+/////TEST ROUTE
+router.get('/TEST_LOGIN', (req, res) => {
+    res.render('TEST_LOGIN')
+});
+
 //home GET page
 router.get('/', quizController.homepage)
 
@@ -32,7 +37,6 @@ router.get('/about', (req, res)=>{
 
 //profile GET page
 router.get('/profile', quizController.profile);
-
 
 //quiz GET page
 router.get('/quiz', quizController.quiz)
