@@ -19,10 +19,6 @@ const authCheck = (req, res, next)=>{
     }
 }
 
-/////TEST ROUTE
-router.get('/TEST_LOGIN', (req, res) => {
-    res.render('TEST_LOGIN')
-});
 
 //home GET page
 router.get('/', quizController.homepage)
