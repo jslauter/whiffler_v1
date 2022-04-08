@@ -64,8 +64,8 @@ router.get('/google', passport.authenticate('google', {
 // router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
 //     res.redirect('/profile/')
 // });
-router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
-    res.redirect('http://fast-beach-11032.herokuapp.com/google/redirect')
+router.get('http://fast-beach-11032.herokuapp.com/google/redirect', passport.authenticate('google'), (req, res) => {
+    res.redirect('/profile/')
 });
 
 
